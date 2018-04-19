@@ -8,6 +8,15 @@ module.exports = function(server){
 
   socketServer.on('connection', socket => {
     console.log('socket is connected')
+    socket.on('setInitialUsername', (username) => {
+      console.log(username, ' this is username');
+    })
+
+    // socket.emit('message', ['hey baby'])
+
+    socket.on('message', (message) => {
+      socket.emit('message', ['jimbo is here'])
+    })
 
     socket.on('disconnect', () => {
           // DELETE the user from our object
