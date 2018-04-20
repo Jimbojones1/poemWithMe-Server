@@ -16,9 +16,14 @@ module.exports = function(server, session){
 
   socketServer.on('connection', socket => {
     console.log('socket is connected')
-    socket.on('setInitialUsername', (username) => {
-      console.log(username, ' this is username');
-      console.log(socket.handshake.session, ' this is handshake session')
+    socket.on('setInitialUsername', ({username}) => {
+      socket.handshake.session.username = username;
+      socket.handshake.session.isLoggedIn = false;
+
+      // add the user to the global list of usernames;
+      usernames[username] = username;
+
+      socket.emit('updateUsers', Object.keys(usernames));
   });
 
 
