@@ -35,6 +35,8 @@ module.exports = function(server, session){
 
   socket.on('pm', (msgData) => {
     console.log(msgData, 'in pm')
+    console.log(socketServer.sockets.connected, usernames, msgData.recipient, usernames[msgData.recipient], '------------')
+    socketServer.sockets.connected[usernames[msgData.recipient]].emit('pm', msgData)
   });
 
 
