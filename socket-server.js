@@ -3,6 +3,7 @@ const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
 
+
 module.exports = function(server, session){
   const socketServer = io(server);
 
@@ -15,19 +16,26 @@ module.exports = function(server, session){
 
 
   socketServer.on('connection', socket => {
-    console.log('socket is connected')
-    socket.on('setInitialUsername', ({username}) => {
+
+
+
+
+    socketServer.sockets.emit('updateUsers', Object.keys(usernames));
+
+    socket.on('setInitialUsername', (username) => {
       socket.handshake.session.username = username;
       socket.handshake.session.isLoggedIn = false;
 
       // add the user to the global list of usernames;
-      usernames[username] = username;
+      usernames[username] = socket.id;
 
-      socket.emit('updateUsers', Object.keys(usernames));
+      socketServer.sockets.emit('updateUsers', Object.keys(usernames));
   });
 
 
-
+  socket.on('pm', (msgData) => {
+    console.log(msgData, 'in pm')
+  });
 
 
     // socket.emit('message', ['hey baby'])
@@ -37,11 +45,12 @@ module.exports = function(server, session){
   })
 
   socket.on('disconnect', () => {
+
         // DELETE the user from our object
-        delete usernames[socket.username]
+        delete usernames[socket.handshake.session.username]
         // the update the users list by firing an event to the react application
         // to update the current users
-        socketServer.emit('users', Object.keys(usernames));
+        socketServer.emit('updateUsers', Object.keys(usernames));
   });
 
 
