@@ -37,6 +37,10 @@ module.exports = function(server, session){
     socketServer.sockets.connected[usernames[msgData.recipient]].emit('pm', msgData)
   });
 
+  socket.on('poeming', (text) => {
+    socket.broadcast.emit('poeming', text)
+  })
+
 
   socket.on('disconnect', () => {
 
