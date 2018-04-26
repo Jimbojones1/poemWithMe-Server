@@ -2,6 +2,7 @@ const io = require('socket.io');
 const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
+const rooms = [];
 
 
 module.exports = function(server, session){
@@ -39,6 +40,10 @@ module.exports = function(server, session){
 
   socket.on('poeming', (text) => {
     socket.broadcast.emit('poeming', text)
+  });
+
+  socket.on('invite', (userOne, userTwo) => {
+    console.log(userOne, userTwo, ' these sare the users')
   })
 
 
