@@ -3,6 +3,7 @@ const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
 const rooms = [];
+let HomeRoomMembers = [];
 roomNumbers = 0;
 
 module.exports = function(server, session){
@@ -27,10 +28,16 @@ module.exports = function(server, session){
       socket.handshake.session.username = username;
       socket.handshake.session.isLoggedIn = false;
 
+
+      socket.join('home');
+      socket.room = 'home';
+
+      HomeRoomMembers.push(username);
+
       // add the user to the global list of usernames;
       usernames[username] = socket.id;
 
-      socketServer.sockets.emit('updateUsers', Object.keys(usernames));
+      socketServer.sockets.emit('updateUsers', HomeRoomMembers);
   });
 
 
@@ -43,7 +50,16 @@ module.exports = function(server, session){
     socketServer.to(socket.room).emit('poeming', text)
   });
 
-  socket.on('invite', (userOne, userTwo) => {
+  socket.on('invite', async (userOne, userTwo) => {
+
+    socket.leave('home');
+    socketServer.sockets.sockets[usernames[userTwo]].leave(`${roomNumbers}`)
+    console.log(userTwo, userOne, ' this is uerOne and Two')
+    HomeRoomMembers = await HomeRoomMembers.filter((username) => username !== userOne && username !== userTwo);
+    console.log(HomeRoomMembers, ' this is HomeRoomMembers')
+    socketServer.sockets.emit('updateUsers', HomeRoomMembers)
+
+    roomNumbers++
     // console.log(userOne, userTwo, ' these sare the users')
     // console.log(usernames[userOne], usernames[userTwo], ' this is username values should be socket.id');
     // console.log('=================================================================')
@@ -61,7 +77,7 @@ module.exports = function(server, session){
     socket.room = roomNumbers;
     socketServer.sockets.sockets[usernames[userTwo]].room = roomNumbers;
 
-    roomNumbers++
+
 
     // console.log(socket.rooms, ' this is socket')
     // console.log('===========================================================')
