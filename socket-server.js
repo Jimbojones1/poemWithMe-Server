@@ -3,7 +3,7 @@ const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
 const rooms = [];
-
+roomNumbers = 0;
 
 module.exports = function(server, session){
   const socketServer = io(server);
@@ -39,11 +39,36 @@ module.exports = function(server, session){
   });
 
   socket.on('poeming', (text) => {
-    socket.broadcast.emit('poeming', text)
+    console.log(socket.room, 'socket room in poeming')
+    socketServer.to(socket.room).emit('poeming', text)
   });
 
   socket.on('invite', (userOne, userTwo) => {
-    console.log(userOne, userTwo, ' these sare the users')
+    // console.log(userOne, userTwo, ' these sare the users')
+    // console.log(usernames[userOne], usernames[userTwo], ' this is username values should be socket.id');
+    // console.log('=================================================================')
+    // console.log(socketServer.sockets.sockets[usernames[userTwo]], ' this is socketServer')
+    // console.log('=================================================================')
+
+    socket.join(`${roomNumbers}`);
+    socketServer.sockets.sockets[usernames[userTwo]].join(`${roomNumbers}`)
+    rooms.push({
+      id: roomNumbers,
+      userOne: usernames[userOne],
+      userTwo: usernames[userTwo]
+    });
+
+    socket.room = roomNumbers;
+    socketServer.sockets.sockets[usernames[userTwo]].room = roomNumbers;
+
+    roomNumbers++
+
+    // console.log(socket.rooms, ' this is socket')
+    // console.log('===========================================================')
+    // console.log(socketServer.sockets.sockets[usernames[userTwo]].rooms)
+
+
+
   })
 
 
