@@ -3,7 +3,7 @@ const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
 const rooms = [];
-let HomeRoomMembers = [];
+const HomeRoomMembers = [];
 roomNumbers = 0;
 
 module.exports = function(server, session){
@@ -48,6 +48,10 @@ module.exports = function(server, session){
   socket.on('poeming', (text) => {
     console.log(socket.room, 'socket room in poeming')
     socketServer.to(socket.room).emit('poeming', text)
+  });
+
+  socket.on('start_poem', (whoClickedStart) => {
+    socketServer.to(socket.room).emit('start_poem', whoClickedStart);
   });
 
   socket.on('invite', async (userOne, userTwo) => {

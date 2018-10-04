@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const connectionString = 'mongodb://localhost/poemWithMe';
+const connectionString = process.env.DB_HOST;
 console.log(connectionString)
 
 mongoose.connect(connectionString);
