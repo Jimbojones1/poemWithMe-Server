@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const connectionString = process.env.DB_HOST;
 console.log(connectionString)
 
-mongoose.connect(connectionString);
+mongoose.connect(connectionString, { useNewUrlParser: true } );
 
 mongoose.connection.on('connected', function() {
   console.log('Mongoose connected to: ' + connectionString);
