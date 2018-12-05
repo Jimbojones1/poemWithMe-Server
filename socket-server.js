@@ -3,11 +3,11 @@ const sharedsession = require("express-socket.io-session");
 const usernames = {};
 
 const rooms = [];
-const HomeRoomMembers = [];
+let HomeRoomMembers = [];
 roomNumbers = 0;
 
 module.exports = function(server, session){
-  const socketServer = io(server);
+  let socketServer = io(server);
 
   // initialize session for socket
   socketServer.use(sharedsession(session, {
@@ -51,6 +51,7 @@ module.exports = function(server, session){
   });
 
   socket.on('start_poem', (whoClickedStart) => {
+    console.log(socket.room, rooms)
     socketServer.to(socket.room).emit('start_poem', whoClickedStart);
   });
 
@@ -71,6 +72,7 @@ module.exports = function(server, session){
     // console.log('=================================================================')
 
     socket.join(`${roomNumbers}`);
+    // socket.room = roomNumbers;
     socketServer.sockets.sockets[usernames[userTwo]].join(`${roomNumbers}`)
     rooms.push({
       id: roomNumbers,
@@ -89,7 +91,8 @@ module.exports = function(server, session){
 
 
 
-  })
+  });
+
 
 
   socket.on('disconnect', () => {
