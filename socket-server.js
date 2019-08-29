@@ -17,6 +17,10 @@ module.exports = function(server, session){
 
 
 
+
+
+
+
   socketServer.on('connection', socket => {
 
 
@@ -53,6 +57,13 @@ module.exports = function(server, session){
   socket.on('start_poem', (whoClickedStart) => {
     console.log(socket.room, rooms)
     socketServer.to(socket.room).emit('start_poem', whoClickedStart);
+    let i = 0;
+    setInterval(() => {
+
+      socketServer.to(socket.room).emit('countdown', i)
+    }, 1000)
+
+
   });
 
   socket.on('invite', async (userOne, userTwo) => {
