@@ -1,0 +1,98 @@
+@-ms-viewport {
+  width: device-width;
+}
+#prvBoxArea {
+  width: 100%;
+  overflow-x: auto;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  max-height: 335px;
+  height: 355px;
+}
+.privateMessageBox {
+  border: 1px solid #F2AE72;
+  float: right;
+  margin-right: 1.9%;
+  margin-left: 0;
+  height: 355px;
+  box-shadow: 0 8px 6px -6px black;
+}
+.privateMessageBox .top-bar {
+  height: 15%;
+  padding: 4.8%;
+  padding-right: 0.5%;
+  background-color: #588C73;
+  border: 1px solid #F2AE72;
+}
+.privateMessageBox .top-bar h4 {
+  float: left;
+  margin: 0 auto;
+  margin-left: 3%;
+  margin-top: -3.5%;
+  font-size: 2.2em;
+  font-family: 'Amatic SC', cursive;
+  color: #F2E394;
+  width: 50%;
+  letter-spacing: 0.049em;
+  font-weight: 900;
+}
+.privateMessageBox .top-bar i {
+  color: #F2E394;
+}
+.privateMessageBox .top-bar .removeButton {
+  float: right;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.privateMessageBox .top-bar #chatButtonUl {
+  list-style: none;
+  font-size: 1.3em;
+  display: block;
+  float: right;
+  margin-right: 9%;
+  height: 14px;
+}
+.privateMessageBox .top-bar #chatButtonUl li {
+  width: 20%;
+  display: inline-block;
+}
+.privateMessageBox .top-bar #chatButtonUl .fa-pencil {
+  margin-left: -208%;
+}
+.privateMessageBox .prvSend {
+  margin-bottom: 0;
+  height: 63px;
+  border-top: 0.8px solid #F2AE72;
+  border-left: 0;
+}
+.privateMessageBox:focus {
+  border: 1px solid #F2AE72;
+}
+.privateMessageBox .privateMessage {
+  width: 100%;
+  height: 67%;
+  overflow: auto;
+  background-color: floralwhite;
+}
+.privateMessageBox .privateMessage p {
+  font-size: 0.8em;
+  margin-bottom: 0.1em;
+  color: black;
+  margin-left: 2.8%;
+  width: 80%;
+  margin-top: 0.2em;
+}
+.privateMessageBox .privateMessage .sender {
+  color: #588C73;
+  font-weight: bold;
+}
+.privateMessageBox .privateMessage .recipient {
+  color: #8C4646;
+  font-weight: bold;
+}
+@media (min-width: 1200px) {
+  .privateMessageBox {
+    width: 25.666667% !important;
+  }
+}

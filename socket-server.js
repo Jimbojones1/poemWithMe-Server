@@ -7,7 +7,10 @@ let HomeRoomMembers = [];
 roomNumbers = 0;
 
 module.exports = function(server, session){
-  let socketServer = io(server);
+  let socketServer = io(server, {cors: {
+    origin: "http://localhost:3000",
+    credentials: true
+  }});
 
   // initialize session for socket
   socketServer.use(sharedsession(session, {
@@ -46,7 +49,8 @@ module.exports = function(server, session){
 
 
   socket.on('pm', (msgData) => {
-    socketServer.sockets.connected[usernames[msgData.recipient]].emit('pm', msgData)
+    console.log(socketServer, 'socketServer')
+    socketServer.to([usernames[msgData.recipient]]).emit('pm', msgData)
   });
 
   socket.on('poeming', (text) => {
@@ -69,7 +73,7 @@ module.exports = function(server, session){
   socket.on('invite', async (userOne, userTwo) => {
 
     socket.leave('home');
-    socketServer.sockets.sockets[usernames[userTwo]].leave(`${roomNumbers}`)
+    socketServer.to([usernames[userTwo]]).leave(`${roomNumbers}`)
     console.log(userTwo, userOne, ' this is uerOne and Two')
     HomeRoomMembers = await HomeRoomMembers.filter((username) => username !== userOne && username !== userTwo);
     console.log(HomeRoomMembers, ' this is HomeRoomMembers')

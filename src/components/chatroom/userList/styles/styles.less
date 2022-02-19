@@ -1,0 +1,48 @@
+@green: #588C73;
+@yellow: #F2E394;
+@orange: #F2AE72;
+@red: #D96459;
+@maroon: #8C4646;
+@white: floralwhite;
+
+
+#userList{
+  background-color: @yellow;
+  width: 24%;
+  bottom: 0;
+  height: 100%;
+  max-height: 500px;
+  display: inline-block;
+  border: 1.7px solid @orange;
+  overflow-y: scroll;
+  box-shadow: 0 8px 6px 1.3px black;
+    .userListHeader{
+        margin-bottom: 10px;
+        border-bottom: 1.7px solid @orange;
+        height: 2.5em;
+         -moz-box-shadow:    inset 0 0 4px @orange;
+         -webkit-box-shadow: inset 0 0 4px @orange;
+         box-shadow:         inset 0 0 4px @orange;
+    }
+    ul {
+      margin-left: 11%;
+      list-style: none;
+      clear: both;
+      li{
+        font-size: 1em;
+        border: 1px solid whitesmoke;
+        width: 76%;
+        padding: 3.1%;
+        padding-left: 7%;
+        &:hover{
+          border-color: @orange;
+          }
+       }
+    }
+    h5 {
+    margin-left: 14%;
+    font-family: 'Amatic SC', cursive;
+    font-weight: 700;
+    width:100%;
+  }
+}
